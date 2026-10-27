@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://lashraicaroll.pages.dev/sitemap.xml

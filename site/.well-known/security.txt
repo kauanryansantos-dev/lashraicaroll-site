@@ -1,0 +1,4 @@
+Contact: https://github.com/kauanryansantos-dev/lashraicaroll-site/security/advisories/new
+Expires: 2027-10-28T00:00:00.000Z
+Preferred-Languages: pt, en
+Canonical: https://lashraicaroll.pages.dev/.well-known/security.txt
