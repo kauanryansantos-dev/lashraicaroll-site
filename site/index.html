@@ -291,7 +291,7 @@ header{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;bac
    No celular: cabeçalho opaco, a foto só dá o zoom (transform), sem faixa, neon parado e sem "respirar". */
 @keyframes eyePullLeve{0%{transform:scale(3.4)}30%{transform:scale(1.9)}70%{transform:scale(1.25)}100%{transform:scale(1.02)}}
 @media (max-width: 760px){
-header{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:rgba(10,15,28,.97)!important}
+header{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:#0A0F1C!important}
 .eyephoto{animation-name:eyePullLeve!important;filter:none!important;will-change:transform}
 .sweep{display:none!important}
 .eyestage{animation:none!important}
@@ -299,8 +299,7 @@ header{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;bac
 [style*="backdrop-filter: blur(10px)"]{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:rgba(18,26,43,.96)!important}
 .frev>div>span:first-child{animation:none!important}
 }
-/* com o menu do celular aberto a página não rola (ver topo.js) */
-html.menu-aberto,html.menu-aberto body{overflow:hidden!important;overscroll-behavior:none}
+
 @media (max-width: 760px){
 header>div{flex-wrap:nowrap!important;padding:10px 16px!important}
 header>div>a span:first-child{font-size:22px!important}
@@ -591,7 +590,7 @@ html.lenis,html.lenis body{height:auto}
 .lenis.lenis-smooth{scroll-behavior:auto!important}
 .lenis.lenis-stopped{overflow:hidden}
 </style>
-<script src="js/topo.js?v=20261028b"></script>
+<script src="js/topo.js?v=20261028c"></script>
 </head>
 <body>
 <div id="app"></div>
@@ -1431,7 +1430,7 @@ html.lenis,html.lenis body{height:auto}
 </div>
 </template>
 <script src="js/motor.js?v=20261027a"></script>
-<script src="js/main.js?v=20261028t"></script>
+<script src="js/main.js?v=20261028u"></script>
 <script src="js/lenis.min.js?v=20261022c"></script>
 <script src="js/rolagem.js?v=20261028a"></script>
 <script src="js/regras.js?v=20261027b"></script>

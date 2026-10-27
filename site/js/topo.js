@@ -30,21 +30,31 @@ window.addEventListener('pageshow', function () { if (!location.hash) window.scr
     }, 180);
   });
 })();
-// Menu do celular (details.mmenu): com ele aberto a página não rola; um toque fora só fecha
-// (não rola nem aciona o que estiver embaixo). Esc também fecha.
+// Menu do celular (details.mmenu): abre onde a pessoa está. Se ela rolar a página (dedo ou roda), o menu fecha
+// e a rolagem segue normal. Um toque fora (sem arrastar) só fecha, sem acionar o que estiver embaixo. Esc também fecha.
+// Não trava a rolagem: no iPhone, overflow:hidden na página fazia o Safari pular para o topo e sumir o cabeçalho.
 (function () {
-  var html = document.documentElement;
+  var x0 = 0, y0 = 0, fora = false, arrastou = false;
   function aberto() { return document.querySelector('details.mmenu[open]'); }
   function fecha() { var d = aberto(); if (d) d.removeAttribute('open'); }
-  document.addEventListener('toggle', function (e) {
-    if (e.target.classList && e.target.classList.contains('mmenu')) html.classList.toggle('menu-aberto', e.target.open);
-  }, true);
   document.addEventListener('touchstart', function (e) {
-    var d = aberto(); if (d && !d.contains(e.target)) { e.preventDefault(); fecha(); }
-  }, { passive: false });
+    var d = aberto(); fora = !!(d && !d.contains(e.target)); arrastou = false;
+    if (fora) { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }
+  }, { passive: true });
   document.addEventListener('touchmove', function (e) {
-    var d = aberto(); if (d && !d.querySelector('.mm-panel').contains(e.target)) e.preventDefault();
+    if (!fora || arrastou) return;
+    var t = e.touches[0];
+    if (Math.abs(t.clientX - x0) > 8 || Math.abs(t.clientY - y0) > 8) { arrastou = true; fecha(); }
+  }, { passive: true });
+  document.addEventListener('touchend', function (e) {
+    if (fora && !arrastou && aberto()) { e.preventDefault(); fecha(); }   // toque parado fora: só fecha (o preventDefault evita o clique embaixo)
+    fora = false;
   }, { passive: false });
+  var yAberto = null;
+  document.addEventListener('toggle', function (e) {
+    if (e.target.classList && e.target.classList.contains('mmenu')) yAberto = e.target.open ? window.scrollY : null;
+  }, true);
+  window.addEventListener('scroll', function () { if (yAberto !== null && Math.abs(window.scrollY - yAberto) > 12) fecha(); }, { passive: true });
   document.addEventListener('click', function (e) { var d = aberto(); if (d && !d.contains(e.target)) fecha(); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') fecha(); });
 })();

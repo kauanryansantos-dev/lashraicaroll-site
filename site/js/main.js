@@ -165,7 +165,7 @@ class Component extends DCLogic {
     };
     document.addEventListener('click', this._trk, true);
   }
-  componentDidUpdate() { var lock = !!(this.state.slotOn || this.state.lb || this.state.waOn); var de = document.documentElement; if (lock !== this._locked) { this._locked = lock; de.style.overflow = lock ? 'hidden' : ''; document.body.style.overflow = lock ? 'hidden' : ''; if (window.__lenis) { if (lock) window.__lenis.stop(); else window.__lenis.start(); } } }
+  componentDidUpdate() { var lock = !!(this.state.slotOn || this.state.lb || this.state.waOn); var de = document.documentElement; if (lock !== this._locked) { this._locked = lock; if (lock) this._yTrava = window.scrollY; de.style.overflow = lock ? 'hidden' : ''; document.body.style.overflow = lock ? 'hidden' : ''; var yv = this._yTrava; if (!lock && yv != null && Math.abs(window.scrollY - yv) > 2) window.scrollTo(0, yv);   /* iPhone: o overflow:hidden pode jogar a página para o topo; ao fechar, volta para onde estava */ if (window.__lenis) { if (lock) window.__lenis.stop(); else window.__lenis.start(); } } }
   _waRun() {
     var self = this;
     clearTimeout(this._waA); (this._waSeq || []).forEach(clearTimeout); this._waSeq = [];
