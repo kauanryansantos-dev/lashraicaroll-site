@@ -30,3 +30,12 @@ window.addEventListener('pageshow', function () { if (!location.hash) window.scr
     }, 180);
   });
 })();
+// Menu do celular (details.mmenu): fecha ao tocar fora do painel ou apertar Esc.
+(function () {
+  function fecha() { var d = document.querySelector('details.mmenu[open]'); if (d) d.removeAttribute('open'); }
+  document.addEventListener('click', function (e) {
+    var d = document.querySelector('details.mmenu[open]');
+    if (d && !d.contains(e.target)) fecha();
+  });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') fecha(); });
+})();

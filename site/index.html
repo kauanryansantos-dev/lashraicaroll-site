@@ -315,6 +315,26 @@ section{scroll-margin-top:110px}
 video::-webkit-media-controls,video::-webkit-media-controls-start-playback-button,video::-webkit-media-controls-overlay-play-button{display:none!important;-webkit-appearance:none}
 .mmenu{display:none}
 .mmenu summary::-webkit-details-marker{display:none}
+/* menu do celular (28/10): painel na largura da tela logo abaixo do cabeçalho, página escurecida atrás (sombra gigante cortada no topo,
+   porque o backdrop-filter do header impede position:fixed de cobrir a tela), ☰ vira ✕, fecha ao tocar fora (topo.js) */
+.mmenu{position:static}
+.mm-btn{list-style:none;width:44px;height:44px;border-radius:50%;border:1px solid #24304A;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .2s,border-color .2s;-webkit-tap-highlight-color:transparent}
+.mm-ico-fechar{display:none}
+.mmenu[open] .mm-btn{background:#1E6FD9;border-color:#1E6FD9}
+.mmenu[open] .mm-ico-abrir{display:none}
+.mmenu[open] .mm-ico-fechar{display:block}
+.mm-panel{position:absolute;top:calc(100% + 10px);left:12px;right:12px;background:#121A2B;border:1px solid #24304A;border-radius:24px;padding:14px 10px 10px;display:flex;flex-direction:column;box-shadow:0 0 0 100vmax rgba(5,8,15,.62),0 30px 60px -20px rgba(0,0,0,.8);clip-path:inset(-11px -100vmax -100vmax -100vmax);animation:mmIn .22s cubic-bezier(.2,.8,.2,1)}
+@keyframes mmIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+.mm-label{margin:0 0 6px;padding:0 12px;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#7C8BA6}
+.mm-item{position:relative;display:flex;align-items:center;gap:14px;padding:13px 12px;border-radius:14px;color:#F2F6FF;text-decoration:none;font-weight:600;font-size:16px;-webkit-tap-highlight-color:transparent}
+.mm-item+.mm-item::before{content:"";position:absolute;top:0;left:62px;right:12px;height:1px;background:#1C2640}
+.mm-item:active{background:#1A2540}
+.mm-i{flex:0 0 36px;height:36px;border-radius:11px;background:rgba(124,203,255,.1);display:flex;align-items:center;justify-content:center}
+.mm-seta{margin-left:auto;color:#4E5D7A}
+.mm-rodape{display:flex;gap:8px;margin-top:10px;padding-top:12px;border-top:1px solid #24304A}
+.mm-rodape a{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;border-radius:999px;border:1px solid #24304A;color:#CFD8E6;text-decoration:none;font-weight:600;font-size:14px}
+header:has(.mmenu[open]){z-index:40!important}
+@media (prefers-reduced-motion: reduce){.mm-panel{animation:none}}
 @media (max-width: 760px){
 .mmenu{display:block}
 .carousel{display:flex!important;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;margin:0 -24px;padding:0 24px 8px;scrollbar-width:none}
@@ -556,7 +576,7 @@ html.lenis,html.lenis body{height:auto}
 .lenis.lenis-smooth{scroll-behavior:auto!important}
 .lenis.lenis-stopped{overflow:hidden}
 </style>
-<script src="js/topo.js?v=20261027b"></script>
+<script src="js/topo.js?v=20261028a"></script>
 </head>
 <body>
 <div id="app"></div>
@@ -668,14 +688,19 @@ html.lenis,html.lenis body{height:auto}
 <a class="navlink" href="#pacotes" style="color: #F2F6FF; text-decoration: none; padding: 12px 0">Pacotes</a>
 <a class="navlink" href="#sobre" style="color: #F2F6FF; text-decoration: none; padding: 12px 0">Sobre</a>
 <a href="https://wa.me/5541992637025?text=Oi%2C%20Raissa%21%20Vim%20pelo%20seu%20site%20%F0%9F%92%99%0AQuero%20agendar%20uma%20extens%C3%A3o%20de%20c%C3%ADlios.%0AQuais%20hor%C3%A1rios%20voc%C3%AA%20tem%20dispon%C3%ADveis%20esta%20semana%3F" data-zap="janela" data-onclick="{{waAskTop}}" style="background: #1E6FD9; color: #FFFFFF; text-decoration: none; padding: 12px 22px; border-radius: 999px; font-weight: 700; box-shadow: 0 0 24px -6px #1E6FD9">Agendar</a>
-<details class="mmenu" style="position: relative">
-<summary aria-label="Abrir menu" style="list-style: none; width: 44px; height: 44px; border-radius: 50%; border: 1px solid #24304A; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F2F6FF" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary>
-<div style="position: absolute; right: 0; top: 54px; width: 240px; background: #121A2B; border: 1px solid #24304A; border-radius: 20px; padding: 10px; display: flex; flex-direction: column; box-shadow: 0 30px 60px -20px rgba(0,0,0,0.7)">
-<a data-onclick="{{closeMenu}}" href="#antes-depois" style="color: #F2F6FF; text-decoration: none; padding: 14px; border-radius: 12px; font-weight: 600">Resultados</a>
-<a data-onclick="{{closeMenu}}" href="#simulador" style="color: #F2F6FF; text-decoration: none; padding: 14px; border-radius: 12px; font-weight: 600">Técnicas e preços</a>
-<a data-onclick="{{closeMenu}}" href="#pacotes" style="color: #F2F6FF; text-decoration: none; padding: 14px; border-radius: 12px; font-weight: 600">Pacotes e preços</a>
-<a data-onclick="{{closeMenu}}" href="#duvidas" style="color: #F2F6FF; text-decoration: none; padding: 14px; border-radius: 12px; font-weight: 600">Dúvidas</a>
-<a data-onclick="{{closeMenu}}" href="#sobre" style="color: #F2F6FF; text-decoration: none; padding: 14px; border-radius: 12px; font-weight: 600">Sobre e certificados</a>
+<details class="mmenu">
+<summary aria-label="Abrir menu" class="mm-btn"><svg class="mm-ico-abrir" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F2F6FF" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><svg class="mm-ico-fechar" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F2F6FF" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></summary>
+<div class="mm-panel">
+<p class="mm-label">Navegue pelo site</p>
+<a class="mm-item" data-onclick="{{closeMenu}}" href="#antes-depois"><span class="mm-i"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7CCBFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s4-6 10-6 10 6 10 6-4 6-10 6S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></span>Resultados<svg class="mm-seta" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a>
+<a class="mm-item" data-onclick="{{closeMenu}}" href="#simulador"><span class="mm-i"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7CCBFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.6 5.6L20 9.3l-4 4 1 5.7L12 16.3 7 19l1-5.7-4-4 5.4-.7z"/></svg></span>Técnicas e preços<svg class="mm-seta" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a>
+<a class="mm-item" data-onclick="{{closeMenu}}" href="#pacotes"><span class="mm-i"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7CCBFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M12 8v13M3 12h18M12 8S10 3 7.5 4.5 9 8 12 8zm0 0s2-5 4.5-3.5S15 8 12 8z"/></svg></span>Pacotes e preços<svg class="mm-seta" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a>
+<a class="mm-item" data-onclick="{{closeMenu}}" href="#duvidas"><span class="mm-i"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7CCBFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6V14M12 17.5h.01"/></svg></span>Dúvidas<svg class="mm-seta" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a>
+<a class="mm-item" data-onclick="{{closeMenu}}" href="#sobre"><span class="mm-i"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7CCBFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="5"/><path d="M8.5 12.5 7 21l5-3 5 3-1.5-8.5"/></svg></span>Sobre e certificados<svg class="mm-seta" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a>
+<div class="mm-rodape">
+<a href="https://www.instagram.com/lash_raicaroll/" target="_blank" rel="noopener noreferrer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></svg>Instagram</a>
+<a href="https://www.google.com/maps/search/?api=1&amp;query=Rua%20Cei%C3%A3o%2029%20Cajuru%20Curitiba%20PR" target="_blank" rel="noopener noreferrer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>Como chegar</a>
+</div>
 </div>
 </details>
 </nav>
