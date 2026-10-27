@@ -30,12 +30,21 @@ window.addEventListener('pageshow', function () { if (!location.hash) window.scr
     }, 180);
   });
 })();
-// Menu do celular (details.mmenu): fecha ao tocar fora do painel ou apertar Esc.
+// Menu do celular (details.mmenu): com ele aberto a página não rola; um toque fora só fecha
+// (não rola nem aciona o que estiver embaixo). Esc também fecha.
 (function () {
-  function fecha() { var d = document.querySelector('details.mmenu[open]'); if (d) d.removeAttribute('open'); }
-  document.addEventListener('click', function (e) {
-    var d = document.querySelector('details.mmenu[open]');
-    if (d && !d.contains(e.target)) fecha();
-  });
+  var html = document.documentElement;
+  function aberto() { return document.querySelector('details.mmenu[open]'); }
+  function fecha() { var d = aberto(); if (d) d.removeAttribute('open'); }
+  document.addEventListener('toggle', function (e) {
+    if (e.target.classList && e.target.classList.contains('mmenu')) html.classList.toggle('menu-aberto', e.target.open);
+  }, true);
+  document.addEventListener('touchstart', function (e) {
+    var d = aberto(); if (d && !d.contains(e.target)) { e.preventDefault(); fecha(); }
+  }, { passive: false });
+  document.addEventListener('touchmove', function (e) {
+    var d = aberto(); if (d && !d.querySelector('.mm-panel').contains(e.target)) e.preventDefault();
+  }, { passive: false });
+  document.addEventListener('click', function (e) { var d = aberto(); if (d && !d.contains(e.target)) fecha(); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') fecha(); });
 })();

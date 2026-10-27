@@ -286,6 +286,21 @@ header{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;bac
 /* granulado parado (27/10/2026): a camada 4x maior com mix-blend pulando a cada 0,8 s fazia a tela piscar em placas de vídeo */
 .grain{animation:none!important;inset:0!important;width:100%!important;height:100%!important}
 @media (max-width: 760px){.grain{display:none}}
+/* celular: rolagem leve (28/10). No iPhone o peso vinha de repintar a cada quadro: blur atrás do cabeçalho,
+   foto da história com blur e brilho ligados à rolagem, faixa de luz com mix-blend, bordas neon pulsando box-shadow.
+   No celular: cabeçalho opaco, a foto só dá o zoom (transform), sem faixa, neon parado e sem "respirar". */
+@keyframes eyePullLeve{0%{transform:scale(3.4)}30%{transform:scale(1.9)}70%{transform:scale(1.25)}100%{transform:scale(1.02)}}
+@media (max-width: 760px){
+header{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:rgba(10,15,28,.97)!important}
+.eyephoto{animation-name:eyePullLeve!important;filter:none!important;will-change:transform}
+.sweep{display:none!important}
+.eyestage{animation:none!important}
+.neon{animation:none!important;box-shadow:0 0 0 1px rgba(124,203,255,.45),0 0 22px -2px rgba(124,203,255,.6),0 0 52px -10px rgba(30,111,217,.85)!important}
+[style*="backdrop-filter: blur(10px)"]{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:rgba(18,26,43,.96)!important}
+.frev>div>span:first-child{animation:none!important}
+}
+/* com o menu do celular aberto a página não rola (ver topo.js) */
+html.menu-aberto,html.menu-aberto body{overflow:hidden!important;overscroll-behavior:none}
 @media (max-width: 760px){
 header>div{flex-wrap:nowrap!important;padding:10px 16px!important}
 header>div>a span:first-child{font-size:22px!important}
@@ -355,7 +370,7 @@ header:has(.mmenu[open]){z-index:40!important}
 @media (min-width: 1100px){.fgrid{grid-template-columns:1.1fr 1fr 1fr 1.1fr!important}}
 @media (min-width: 761px) and (max-width: 1099px){.fgrid{grid-template-columns:1fr 1fr!important}.frev{max-width:420px}}
 @media (max-width: 760px){.big-text{font-size:110px!important}.cap{top:auto!important;bottom:calc(112px + env(safe-area-inset-bottom))!important;padding:0 20px!important}.cap p{font-size:clamp(26px,7.5vw,34px)!important;line-height:1.1!important}.cap p+p{font-size:15px!important;line-height:1.45!important;margin-top:8px!important}.hint{bottom:calc(96px + env(safe-area-inset-bottom))!important}.eyestage>div:last-of-type{height:60%!important}.cap p{font-size:30px!important}.cap p+p{font-size:15px!important}.eye{width:150%!important;max-width:none!important;margin-top:-14vh!important}.story{height:230vh!important}.navlink{display:none!important}.float-cta{right:12px!important;bottom:12px!important;padding:14px 18px!important}}
-.gbadge::after{content:"";position:absolute;top:0;bottom:0;left:-60%;width:40%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.28),transparent);transform:skewX(-20deg);animation:gshine 4.5s ease-in-out 1.5s infinite;pointer-events:none}@keyframes gshine{0%{left:-60%}35%,100%{left:130%}}
+.gbadge::after{content:"";position:absolute;top:0;bottom:0;left:0;width:40%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.28),transparent);transform:translateX(-150%) skewX(-20deg);animation:gshine 4.5s ease-in-out 1.5s infinite;pointer-events:none}@keyframes gshine{0%{transform:translateX(-150%) skewX(-20deg)}35%,100%{transform:translateX(325%) skewX(-20deg)}}
 .splash-draw path{stroke-dasharray:1;stroke-dashoffset:1;animation:ldraw 1.3s cubic-bezier(.45,.05,.3,1) .1s forwards,lglow .5s ease 1.35s forwards}@keyframes ldraw{to{stroke-dashoffset:0}}@keyframes lglow{to{opacity:0}}.splash-logo{opacity:0;animation:lfill .6s ease 1.2s forwards}@keyframes lfill{from{opacity:0;filter:drop-shadow(0 0 0 rgba(124,203,255,0))}to{opacity:1;filter:drop-shadow(0 0 8px rgba(124,203,255,.28))}}
 /* abertura nítida (28/10): logo em 1080 px (antes 900 px esticada no celular 3x), contorno some de vez quando a logo aparece (antes ficava a 25% por cima, fantasma desalinhado) e brilhos menores */
 @media (max-width: 760px){.foot-bottom{padding-top:16px!important;padding-bottom:12px!important}}
@@ -576,7 +591,7 @@ html.lenis,html.lenis body{height:auto}
 .lenis.lenis-smooth{scroll-behavior:auto!important}
 .lenis.lenis-stopped{overflow:hidden}
 </style>
-<script src="js/topo.js?v=20261028a"></script>
+<script src="js/topo.js?v=20261028b"></script>
 </head>
 <body>
 <div id="app"></div>
@@ -1416,7 +1431,7 @@ html.lenis,html.lenis body{height:auto}
 </div>
 </template>
 <script src="js/motor.js?v=20261027a"></script>
-<script src="js/main.js?v=20261028s"></script>
+<script src="js/main.js?v=20261028t"></script>
 <script src="js/lenis.min.js?v=20261022c"></script>
 <script src="js/rolagem.js?v=20261028a"></script>
 <script src="js/regras.js?v=20261027b"></script>

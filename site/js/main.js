@@ -68,15 +68,22 @@ class Component extends DCLogic {
         veu.setAttribute('aria-hidden', 'true');
         veu.style.cssText = 'position:absolute;inset:0;z-index:3;pointer-events:none';
         m.querySelectorAll('img, video').forEach(function (e) {
-          var c = e.cloneNode(false);
-          c.removeAttribute('loading'); c.removeAttribute('data-onclick');
-          if (c.tagName === 'VIDEO') { c.removeAttribute('autoplay'); if (e.poster) c.setAttribute('poster', e.poster); }
+          var c;
+          // vídeo vira a foto de capa: no iPhone, um vídeo clonado parado aparece preto por um instante
+          if (e.tagName === 'VIDEO') { c = new Image(); c.src = e.poster || ''; c.setAttribute('style', e.getAttribute('style') || ''); c.className = e.className; }
+          else { c = e.cloneNode(false); c.removeAttribute('loading'); c.removeAttribute('data-onclick'); }
           veu.appendChild(c);
         });
         var box = m.closest('.sim-box') || m; var rb = box.getBoundingClientRect(), rm = m.getBoundingClientRect();
         veu.style.cssText += ';inset:auto;left:' + (rm.left - rb.left) + 'px;top:' + (rm.top - rb.top) + 'px;width:' + rm.width + 'px;height:' + rm.height + 'px;overflow:hidden';
         box.appendChild(veu);
       }
+      // Só troca quando a cópia já está pintada: no iPhone ela aparecia vazia no primeiro quadro e a foto nova piscava antes da hora.
+      var copias = veu ? [].slice.call(veu.querySelectorAll('img')) : [];
+      var veuPronto = Promise.all(copias.map(function (c) { return c.decode ? c.decode().catch(function () {}) : null; }));
+      me._simPronto = Promise.race([veuPronto, new Promise(function (r) { setTimeout(r, 400); })]);
+      me._simPronto.then(function () { requestAnimationFrame(segue); });
+      function segue() {
       var inf = document.querySelector('#simulador .sim-info'), ci = null;
       if (inf && inf.animate) {
         var pai = inf.parentNode; if (getComputedStyle(pai).position === 'static') pai.style.position = 'relative';
@@ -100,18 +107,19 @@ class Component extends DCLogic {
 
         Promise.race([prontas, limite]).then(function () {
           var tira = function () { if (veu.parentNode) veu.parentNode.removeChild(veu); };
-          veu.animate([{ opacity: 1, filter: 'blur(0)' }, { opacity: 0, filter: 'blur(4px)' }], { duration: 1100, easing: 'cubic-bezier(.4,0,.2,1)', fill: 'forwards' }).onfinish = tira;
+          veu.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 1100, easing: 'cubic-bezier(.4,0,.2,1)', fill: 'forwards' }).onfinish = tira;   // sem blur: no iPhone o filtro animado pesava e piscava
           novas.forEach(function (e) { if (e.animate) e.animate([{ transform: 'scale(1.04)' }, { transform: 'scale(1)' }], { duration: 1400, easing: 'cubic-bezier(.2,.8,.2,1)' }); });
           setTimeout(tira, 1700);   // trava: aba em segundo plano congela a animação; a cópia não pode se acumular
         });
       }, 30);
+      }
     };
     this._simFx = function () {
-      setTimeout(function () {
+      (me._simPronto || Promise.resolve()).then(function () { setTimeout(function () {
         var t = document.querySelector('#simulador .tabs button[aria-pressed="true"]');
         var tb = t && t.parentNode; if (tb && tb.scrollWidth > tb.clientWidth) { var de = tb.scrollLeft, para = Math.max(0, Math.min(tb.scrollWidth - tb.clientWidth, t.offsetLeft - (tb.clientWidth - t.offsetWidth) / 2)), dur = Math.min(1100, 450 + Math.abs(para - de) * 0.6), t0 = 0; tb.style.scrollBehavior = 'auto'; tb.style.scrollSnapType = 'none'; (function an(ts) { if (!t0) t0 = ts; var q = Math.min(1, (ts - t0) / dur), e = q < .5 ? 4 * q * q * q : 1 - Math.pow(-2 * q + 2, 3) / 2; tb.scrollLeft = de + (para - de) * e; if (q < 1) requestAnimationFrame(an); })(performance.now()); }
         prep();
-      }, 30);
+      }, 60); });
     };
     // Só troca quando o simulador está na tela: fora dela, a mudança de altura empurrava a página.
     me._simVis = false;
