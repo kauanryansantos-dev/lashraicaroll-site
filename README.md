@@ -1,7 +1,7 @@
 # Raissa Carolina Lash Design · site
 
 Site do estúdio de extensão de cílios da Raissa Carolina, em Curitiba (PR).
-No ar em **https://lashraicaroll.pages.dev**
+No ar em **https://lashraicaroll.kauanryansantos.workers.dev**
 
 ## O que o site faz
 - Apresenta as técnicas com preço, duração e manutenção, com fotos reais de cada uma.
@@ -13,7 +13,7 @@ No ar em **https://lashraicaroll.pages.dev**
 ## Como é feito
 - HTML, CSS e JavaScript puros, sem framework e sem etapa de build.
 - Rolagem suave com [Lenis](https://github.com/darkroomengineering/lenis) apenas para mouse.
-- Hospedagem estática no Cloudflare Pages (pasta `site/`).
+- Hospedagem estática no Cloudflare Workers (só arquivos da pasta `site/`, configurado em `wrangler.jsonc`).
 
 ## Segurança
 - Content Security Policy rígida: `script-src 'self'`, nenhum script inline, nenhum `on*` no HTML.

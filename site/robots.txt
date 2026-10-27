@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://lashraicaroll.pages.dev/sitemap.xml
+Sitemap: https://lashraicaroll.kauanryansantos.workers.dev/sitemap.xml
