@@ -9,6 +9,8 @@
   Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()
   Cross-Origin-Opener-Policy: same-origin
   Cross-Origin-Resource-Policy: same-origin
+  # o Cloudflare Pages põe "Access-Control-Allow-Origin: *" sozinho; o ! remove (outro site não lê o conteúdo por script)
+  ! Access-Control-Allow-Origin
 
 # Cache longo para imagens e vídeos (o nome muda quando o arquivo muda)
 /assets/*
