@@ -58,3 +58,23 @@ window.addEventListener('pageshow', function () { if (!location.hash) window.scr
   document.addEventListener('click', function (e) { var d = aberto(); if (d && !d.contains(e.target)) fecha(); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') fecha(); });
 })();
+// Versão nova publicada: ao voltar para uma aba já aberta (ou o Safari restaurar a página da memória),
+// pergunta ao servidor se a página mudou (HEAD, sem cache, compara o ETag). Se mudou, recarrega sozinho,
+// a não ser que a pessoa esteja com a janela de agendar ou uma foto aberta (não perde o que digitou).
+(function () {
+  if (!window.fetch || location.protocol.indexOf('http') !== 0) return;
+  var etag = null, conferindo = false;
+  function pega() { return fetch(location.pathname, { method: 'HEAD', cache: 'no-store' }).then(function (r) { return r.headers.get('etag'); }).catch(function () { return null; }); }
+  pega().then(function (e) { etag = e; });
+  function confere() {
+    if (conferindo || !etag || document.visibilityState !== 'visible') return;
+    conferindo = true;
+    pega().then(function (e) {
+      conferindo = false;
+      if (e && e !== etag && !document.querySelector('.wam, [role="dialog"]')) location.reload();
+    });
+  }
+  document.addEventListener('visibilitychange', confere);
+  window.addEventListener('pageshow', function (ev) { if (ev.persisted) confere(); });
+  window.addEventListener('focus', confere);
+})();

@@ -12,6 +12,10 @@
   # o Cloudflare Pages põe "Access-Control-Allow-Origin: *" sozinho; o ! remove (outro site não lê o conteúdo por script)
   ! Access-Control-Allow-Origin
 
-# Cache longo para imagens e vídeos (o nome muda quando o arquivo muda)
+# Cache: as páginas (HTML) o Cloudflare já manda conferir a cada visita (max-age=0, must-revalidate).
+# Imagens e scripts são chamados com ?v=<impressão do conteúdo> (tools/montar-publicacao.mjs):
+# mudou o arquivo, muda o endereço e todo mundo baixa o novo; por isso podem ficar em cache longo.
 /assets/*
+  Cache-Control: public, max-age=31536000, immutable
+/js/*
   Cache-Control: public, max-age=31536000, immutable

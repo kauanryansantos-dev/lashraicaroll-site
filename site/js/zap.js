@@ -77,7 +77,7 @@
     var ov = el('div', 'zap-ov'); ov.setAttribute('role', 'dialog'); ov.setAttribute('aria-modal', 'true'); ov.setAttribute('aria-label', 'Sua mensagem');
     var card = el('div', 'zap-card'); card.setAttribute('data-lenis-prevent', '');
     var hd = el('div', 'zap-hd');
-    var im = el('img'); im.src = 'assets/raissa-whatsapp.webp'; im.alt = ''; im.width = 42; im.height = 42;
+    var im = el('img'); im.src = 'assets/raissa-whatsapp.webp?v=6fcdbd1c8b'; im.alt = ''; im.width = 42; im.height = 42;
     var nm = el('div'); nm.appendChild(el('b', '', 'Lash Rai_caroll')); nm.appendChild(el('small', '', 'é assim que a conversa vai'));
     var x = el('button', 'zap-x', '×'); x.type = 'button'; x.setAttribute('aria-label', 'Fechar'); x.onclick = fecha;
     hd.appendChild(im); hd.appendChild(nm); hd.appendChild(x);
@@ -102,7 +102,7 @@
       var m = el('div', 'zap-m zap-eu'); m.appendChild(el('span', '', t)); var meta = el('span', 'zap-meta', hora + ' '); ck = el('span', 'zap-ck', '✓✓'); meta.appendChild(ck); m.appendChild(meta); body.appendChild(m);
     }, T));
     seq.push(setTimeout(function () { if (ck) ck.className = 'zap-ck azul'; }, T + 800));
-    seq.push(setTimeout(function () { dig = el('div', 'zap-digrow'); var av = el('img'); av.src = 'assets/raissa-whatsapp.webp'; av.alt = ''; av.width = 28; av.height = 28; dig.appendChild(av); var pts = el('div', 'zap-m zap-ela zap-dig'); for (var k = 0; k < 3; k++) pts.appendChild(document.createElement('i')); dig.appendChild(pts); body.appendChild(dig); }, T + 2500));
+    seq.push(setTimeout(function () { dig = el('div', 'zap-digrow'); var av = el('img'); av.src = 'assets/raissa-whatsapp.webp?v=6fcdbd1c8b'; av.alt = ''; av.width = 28; av.height = 28; dig.appendChild(av); var pts = el('div', 'zap-m zap-ela zap-dig'); for (var k = 0; k < 3; k++) pts.appendChild(document.createElement('i')); dig.appendChild(pts); body.appendChild(dig); }, T + 2500));
     seq.push(setTimeout(function () {
       if (dig) dig.remove();
       var r = el('div', 'zap-m zap-ela'); r.appendChild(el('span', '', 'Oii, ' + nome + '! 💗 Tudo bem?\n\nVou verificar a agenda pra você e já te dou um retorno com os horários disponíveis ✨'));
