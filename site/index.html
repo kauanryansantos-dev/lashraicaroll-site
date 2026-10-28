@@ -144,7 +144,10 @@ h1,h2,[style*="var(--fd)"]{-webkit-text-stroke:.45px currentColor}
 @media (hover:hover){.certs-vp:hover .certs{animation-play-state:paused}}
 @keyframes certsRola{to{transform:translateX(-50%)}}
 .certs-vp:active .certs{animation-play-state:paused}
-@media (max-width:760px){.certs-vp .certs{overflow:visible!important;margin:0!important;padding:0!important;scroll-snap-type:none!important;animation-duration:50s}.certs-vp .certs>div{flex:0 0 280px!important;margin-right:14px}}
+/* certificados no celular (28/10): mais devagar (110 s por volta, antes 50 s), sem máscara de degradê sobre a faixa que anda,
+   imagens leves (assets/certificados/cartao, 800 px) que carregam sem depender de "entrar na tela": com a faixa movida
+   por animação o Safari não percebia e o fim da volta aparecia em branco. */
+@media (max-width:760px){.certs-vp{-webkit-mask-image:none;mask-image:none}.certs-vp .certs{overflow:visible!important;margin:0!important;padding:0!important;scroll-snap-type:none!important;animation-duration:110s;will-change:transform}.certs-vp .certs>div{flex:0 0 280px!important;margin-right:14px}}
 .cf-wall{position:relative;aspect-ratio:4/3;display:grid;place-items:center;background:radial-gradient(circle at 50% 35%,color-mix(in srgb,var(--c1) 22%,transparent),#0E1527 72%);border-bottom:1px solid #24304A;text-decoration:none;overflow:hidden}
 .cf{display:block;width:84%;padding:9px;border-radius:5px;background:linear-gradient(135deg,var(--c1),var(--c2) 45%,var(--c1) 70%,var(--c2));box-shadow:0 18px 34px rgba(0,0,0,.55),inset 0 0 0 1px rgba(255,255,255,.35),inset 0 0 0 3px rgba(0,0,0,.18);transition:transform .45s cubic-bezier(.2,.8,.2,1),box-shadow .45s}
 .cf.cf-v{width:44%}
@@ -817,60 +820,60 @@ html.lenis,html.lenis body{height:auto}
 <div class="certs-vp">
 <div class="carousel certs" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; perspective: 900px">
 <div class="pop" style="background: #121A2B; border: 1px solid #24304A; border-radius: 22px; overflow: hidden; display: flex; flex-direction: column">
-<div class="cf-wall" style="--c1: #F6B3C4; --c2: #B85873"><span class="cf"><span class="cf-mat"><img src="assets/certificados/cert-mah-ferreira-2020.webp?v=672047c0eb" width="1600" height="1132" alt="Certificado: Extensão de cílios: Clássico, Híbrido e Volume Russo" loading="lazy" decoding="async"></span></span></div>
+<div class="cf-wall" style="--c1: #F6B3C4; --c2: #B85873"><span class="cf"><span class="cf-mat"><img src="assets/certificados/cartao/cert-mah-ferreira-2020.webp?v=4305ccccef" width="800" height="566" alt="Certificado: Extensão de cílios: Clássico, Híbrido e Volume Russo" loading="eager" fetchpriority="low" decoding="async"></span></span></div>
 <div style="padding: 16px 18px; display: flex; flex-direction: column; gap: 4px"><span style="font-weight: 800; font-size: 15px">Extensão de cílios: Clássico, Híbrido e Volume Russo</span><span style="font-size: 13px; color: #A9B6CC">Curso com Mah Ferreira · 18/12/2020</span></div>
 </div>
 <div class="pop" style="background: #121A2B; border: 1px solid #24304A; border-radius: 22px; overflow: hidden; display: flex; flex-direction: column">
-<div class="cf-wall" style="--c1: #F1D58A; --c2: #8A6A22"><span class="cf cf-v"><span class="cf-mat"><img src="assets/certificados/cert-artista-destaque.webp?v=9a224bfcbe" width="1086" height="1600" alt="Certificado: Artista Destaque" loading="lazy" decoding="async"></span></span></div>
+<div class="cf-wall" style="--c1: #F1D58A; --c2: #8A6A22"><span class="cf cf-v"><span class="cf-mat"><img src="assets/certificados/cartao/cert-artista-destaque.webp?v=db8ac6fdeb" width="544" height="800" alt="Certificado: Artista Destaque" loading="eager" fetchpriority="low" decoding="async"></span></span></div>
 <div style="padding: 16px 18px; display: flex; flex-direction: column; gap: 4px"><span style="font-weight: 800; font-size: 15px">Artista Destaque</span><span style="font-size: 13px; color: #A9B6CC">Lash Solidária, 3ª edição · Cris Bello</span></div>
 </div>
 <div class="pop" style="background: #121A2B; border: 1px solid #24304A; border-radius: 22px; overflow: hidden; display: flex; flex-direction: column">
-<div class="cf-wall" style="--c1: #E9CF8B; --c2: #2B3D72"><span class="cf"><span class="cf-mat"><img src="assets/certificados/cert-elite-dos-cilios-2023.webp?v=68c0e1fce2" width="1600" height="1132" alt="Certificado: Elite dos Cílios: vendas, marketing e gestão (10h)" loading="lazy" decoding="async"></span></span></div>
+<div class="cf-wall" style="--c1: #E9CF8B; --c2: #2B3D72"><span class="cf"><span class="cf-mat"><img src="assets/certificados/cartao/cert-elite-dos-cilios-2023.webp?v=5e79e776d8" width="800" height="566" alt="Certificado: Elite dos Cílios: vendas, marketing e gestão (10h)" loading="eager" fetchpriority="low" decoding="async"></span></span></div>
 <div style="padding: 16px 18px; display: flex; flex-direction: column; gap: 4px"><span style="font-weight: 800; font-size: 15px">Elite dos Cílios: vendas, marketing e gestão (10h)</span><span style="font-size: 13px; color: #A9B6CC">Carol Academy · Curitiba, 27/08/2023</span></div>
 </div>
 <div class="pop" style="background: #121A2B; border: 1px solid #24304A; border-radius: 22px; overflow: hidden; display: flex; flex-direction: column">
-<div class="cf-wall" style="--c1: #7CCBFF; --c2: #C08CF0"><span class="cf cf-v"><span class="cf-mat"><img src="assets/certificados/cert-lash-solidaria-2024.webp?v=33a885a6e1" width="1131" height="1600" alt="Certificado: Workshop Lash Solidária" loading="lazy" decoding="async"></span></span></div>
+<div class="cf-wall" style="--c1: #7CCBFF; --c2: #C08CF0"><span class="cf cf-v"><span class="cf-mat"><img src="assets/certificados/cartao/cert-lash-solidaria-2024.webp?v=8cf11ae41e" width="566" height="800" alt="Certificado: Workshop Lash Solidária" loading="eager" fetchpriority="low" decoding="async"></span></span></div>
 <div style="padding: 16px 18px; display: flex; flex-direction: column; gap: 4px"><span style="font-weight: 800; font-size: 15px">Workshop Lash Solidária</span><span style="font-size: 13px; color: #A9B6CC">Cris Bello Lash Extension · Curitiba, 03/06/2024</span></div>
 </div>
 <div class="pop" style="background: #121A2B; border: 1px solid #24304A; border-radius: 22px; overflow: hidden; display: flex; flex-direction: column">
-<div class="cf-wall" style="--c1: #D98BE6; --c2: #7B2A8C"><span class="cf"><span class="cf-mat"><img src="assets/certificados/cert-fios-tecnologicos-2022.webp?v=4bc994b51c" width="1600" height="1132" alt="Certificado: Fios tecnológicos e acoplagem perfeita" loading="lazy" decoding="async"></span></span></div>
+<div class="cf-wall" style="--c1: #D98BE6; --c2: #7B2A8C"><span class="cf"><span class="cf-mat"><img src="assets/certificados/cartao/cert-fios-tecnologicos-2022.webp?v=aaaba4716a" width="800" height="566" alt="Certificado: Fios tecnológicos e acoplagem perfeita" loading="eager" fetchpriority="low" decoding="async"></span></span></div>
 <div style="padding: 16px 18px; display: flex; flex-direction: column; gap: 4px"><span style="font-weight: 800; font-size: 15px">Fios tecnológicos e acoplagem perfeita</span><span style="font-size: 13px; color: #A9B6CC">Palestra com Daniella Leite · Micropigmentee, 27/09/2022</span></div>
 </div>
 <div class="pop" style="background: #121A2B; border: 1px solid #24304A; border-radius: 22px; overflow: hidden; display: flex; flex-direction: column">
-<div class="cf-wall" style="--c1: #E2A0EA; --c2: #93409F"><span class="cf"><span class="cf-mat"><img src="assets/certificados/cert-sobrancelhas-2022.webp?v=4621618aa0" width="1600" height="1132" alt="Certificado: Reconstrução das sobrancelhas" loading="lazy" decoding="async"></span></span></div>
+<div class="cf-wall" style="--c1: #E2A0EA; --c2: #93409F"><span class="cf"><span class="cf-mat"><img src="assets/certificados/cartao/cert-sobrancelhas-2022.webp?v=2ebc5a6e96" width="800" height="566" alt="Certificado: Reconstrução das sobrancelhas" loading="eager" fetchpriority="low" decoding="async"></span></span></div>
 <div style="padding: 16px 18px; display: flex; flex-direction: column; gap: 4px"><span style="font-weight: 800; font-size: 15px">Reconstrução das sobrancelhas</span><span style="font-size: 13px; color: #A9B6CC">Palestra com Fernanda Ávila · Micropigmentee, 25/08/2022</span></div>
 </div>
 <div class="pop" style="background: #121A2B; border: 1px solid #24304A; border-radius: 22px; overflow: hidden; display: flex; flex-direction: column">
-<div class="cf-wall" style="--c1: #E3B9B0; --c2: #8C5A52"><span class="cf"><span class="cf-mat"><img src="assets/certificados/cert-design-sobrancelha-2022.webp?v=24fb160f1e" width="1600" height="1132" alt="Certificado: Design de Sobrancelha VIP (4h)" loading="lazy" decoding="async"></span></span></div>
+<div class="cf-wall" style="--c1: #E3B9B0; --c2: #8C5A52"><span class="cf"><span class="cf-mat"><img src="assets/certificados/cartao/cert-design-sobrancelha-2022.webp?v=205b68e5a5" width="800" height="566" alt="Certificado: Design de Sobrancelha VIP (4h)" loading="eager" fetchpriority="low" decoding="async"></span></span></div>
 <div style="padding: 16px 18px; display: flex; flex-direction: column; gap: 4px"><span style="font-weight: 800; font-size: 15px">Design de Sobrancelha VIP (4h)</span><span style="font-size: 13px; color: #A9B6CC">Curso com Caroline Cardoso · Curitiba, 29/07/2022</span></div>
 </div>
 
 <div class="pop cert-dup" aria-hidden="true" style="background: #121A2B; border: 1px solid #24304A; border-radius: 22px; overflow: hidden; display: flex; flex-direction: column">
-<div class="cf-wall" style="--c1: #F6B3C4; --c2: #B85873"><span class="cf"><span class="cf-mat"><img src="assets/certificados/cert-mah-ferreira-2020.webp?v=672047c0eb" width="1600" height="1132" alt="" loading="lazy" decoding="async"></span></span></div>
+<div class="cf-wall" style="--c1: #F6B3C4; --c2: #B85873"><span class="cf"><span class="cf-mat"><img src="assets/certificados/cartao/cert-mah-ferreira-2020.webp?v=4305ccccef" width="800" height="566" alt="" loading="eager" fetchpriority="low" decoding="async"></span></span></div>
 <div style="padding: 16px 18px; display: flex; flex-direction: column; gap: 4px"><span style="font-weight: 800; font-size: 15px">Extensão de cílios: Clássico, Híbrido e Volume Russo</span><span style="font-size: 13px; color: #A9B6CC">Curso com Mah Ferreira · 18/12/2020</span></div>
 </div>
 <div class="pop cert-dup" aria-hidden="true" style="background: #121A2B; border: 1px solid #24304A; border-radius: 22px; overflow: hidden; display: flex; flex-direction: column">
-<div class="cf-wall" style="--c1: #F1D58A; --c2: #8A6A22"><span class="cf cf-v"><span class="cf-mat"><img src="assets/certificados/cert-artista-destaque.webp?v=9a224bfcbe" width="1086" height="1600" alt="" loading="lazy" decoding="async"></span></span></div>
+<div class="cf-wall" style="--c1: #F1D58A; --c2: #8A6A22"><span class="cf cf-v"><span class="cf-mat"><img src="assets/certificados/cartao/cert-artista-destaque.webp?v=db8ac6fdeb" width="544" height="800" alt="" loading="eager" fetchpriority="low" decoding="async"></span></span></div>
 <div style="padding: 16px 18px; display: flex; flex-direction: column; gap: 4px"><span style="font-weight: 800; font-size: 15px">Artista Destaque</span><span style="font-size: 13px; color: #A9B6CC">Lash Solidária, 3ª edição · Cris Bello</span></div>
 </div>
 <div class="pop cert-dup" aria-hidden="true" style="background: #121A2B; border: 1px solid #24304A; border-radius: 22px; overflow: hidden; display: flex; flex-direction: column">
-<div class="cf-wall" style="--c1: #E9CF8B; --c2: #2B3D72"><span class="cf"><span class="cf-mat"><img src="assets/certificados/cert-elite-dos-cilios-2023.webp?v=68c0e1fce2" width="1600" height="1132" alt="" loading="lazy" decoding="async"></span></span></div>
+<div class="cf-wall" style="--c1: #E9CF8B; --c2: #2B3D72"><span class="cf"><span class="cf-mat"><img src="assets/certificados/cartao/cert-elite-dos-cilios-2023.webp?v=5e79e776d8" width="800" height="566" alt="" loading="eager" fetchpriority="low" decoding="async"></span></span></div>
 <div style="padding: 16px 18px; display: flex; flex-direction: column; gap: 4px"><span style="font-weight: 800; font-size: 15px">Elite dos Cílios: vendas, marketing e gestão (10h)</span><span style="font-size: 13px; color: #A9B6CC">Carol Academy · Curitiba, 27/08/2023</span></div>
 </div>
 <div class="pop cert-dup" aria-hidden="true" style="background: #121A2B; border: 1px solid #24304A; border-radius: 22px; overflow: hidden; display: flex; flex-direction: column">
-<div class="cf-wall" style="--c1: #7CCBFF; --c2: #C08CF0"><span class="cf cf-v"><span class="cf-mat"><img src="assets/certificados/cert-lash-solidaria-2024.webp?v=33a885a6e1" width="1131" height="1600" alt="" loading="lazy" decoding="async"></span></span></div>
+<div class="cf-wall" style="--c1: #7CCBFF; --c2: #C08CF0"><span class="cf cf-v"><span class="cf-mat"><img src="assets/certificados/cartao/cert-lash-solidaria-2024.webp?v=8cf11ae41e" width="566" height="800" alt="" loading="eager" fetchpriority="low" decoding="async"></span></span></div>
 <div style="padding: 16px 18px; display: flex; flex-direction: column; gap: 4px"><span style="font-weight: 800; font-size: 15px">Workshop Lash Solidária</span><span style="font-size: 13px; color: #A9B6CC">Cris Bello Lash Extension · Curitiba, 03/06/2024</span></div>
 </div>
 <div class="pop cert-dup" aria-hidden="true" style="background: #121A2B; border: 1px solid #24304A; border-radius: 22px; overflow: hidden; display: flex; flex-direction: column">
-<div class="cf-wall" style="--c1: #D98BE6; --c2: #7B2A8C"><span class="cf"><span class="cf-mat"><img src="assets/certificados/cert-fios-tecnologicos-2022.webp?v=4bc994b51c" width="1600" height="1132" alt="" loading="lazy" decoding="async"></span></span></div>
+<div class="cf-wall" style="--c1: #D98BE6; --c2: #7B2A8C"><span class="cf"><span class="cf-mat"><img src="assets/certificados/cartao/cert-fios-tecnologicos-2022.webp?v=aaaba4716a" width="800" height="566" alt="" loading="eager" fetchpriority="low" decoding="async"></span></span></div>
 <div style="padding: 16px 18px; display: flex; flex-direction: column; gap: 4px"><span style="font-weight: 800; font-size: 15px">Fios tecnológicos e acoplagem perfeita</span><span style="font-size: 13px; color: #A9B6CC">Palestra com Daniella Leite · Micropigmentee, 27/09/2022</span></div>
 </div>
 <div class="pop cert-dup" aria-hidden="true" style="background: #121A2B; border: 1px solid #24304A; border-radius: 22px; overflow: hidden; display: flex; flex-direction: column">
-<div class="cf-wall" style="--c1: #E2A0EA; --c2: #93409F"><span class="cf"><span class="cf-mat"><img src="assets/certificados/cert-sobrancelhas-2022.webp?v=4621618aa0" width="1600" height="1132" alt="" loading="lazy" decoding="async"></span></span></div>
+<div class="cf-wall" style="--c1: #E2A0EA; --c2: #93409F"><span class="cf"><span class="cf-mat"><img src="assets/certificados/cartao/cert-sobrancelhas-2022.webp?v=2ebc5a6e96" width="800" height="566" alt="" loading="eager" fetchpriority="low" decoding="async"></span></span></div>
 <div style="padding: 16px 18px; display: flex; flex-direction: column; gap: 4px"><span style="font-weight: 800; font-size: 15px">Reconstrução das sobrancelhas</span><span style="font-size: 13px; color: #A9B6CC">Palestra com Fernanda Ávila · Micropigmentee, 25/08/2022</span></div>
 </div>
 <div class="pop cert-dup" aria-hidden="true" style="background: #121A2B; border: 1px solid #24304A; border-radius: 22px; overflow: hidden; display: flex; flex-direction: column">
-<div class="cf-wall" style="--c1: #E3B9B0; --c2: #8C5A52"><span class="cf"><span class="cf-mat"><img src="assets/certificados/cert-design-sobrancelha-2022.webp?v=24fb160f1e" width="1600" height="1132" alt="" loading="lazy" decoding="async"></span></span></div>
+<div class="cf-wall" style="--c1: #E3B9B0; --c2: #8C5A52"><span class="cf"><span class="cf-mat"><img src="assets/certificados/cartao/cert-design-sobrancelha-2022.webp?v=205b68e5a5" width="800" height="566" alt="" loading="eager" fetchpriority="low" decoding="async"></span></span></div>
 <div style="padding: 16px 18px; display: flex; flex-direction: column; gap: 4px"><span style="font-weight: 800; font-size: 15px">Design de Sobrancelha VIP (4h)</span><span style="font-size: 13px; color: #A9B6CC">Curso com Caroline Cardoso · Curitiba, 29/07/2022</span></div>
 </div>
 
