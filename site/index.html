@@ -253,7 +253,7 @@ header{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;bac
 @media (max-width: 760px){#simulador .tabs button{font-size:13px!important;padding:9px 14px!important;min-height:40px!important;white-space:nowrap}}
 @media (max-width: 760px){.vid-arrows{display:none!important}}
 @keyframes nudge{0%,100%{transform:translateX(0)}50%{transform:translateX(8px)}}
-@media (max-width: 760px){.vids{overflow-x:auto!important;scroll-snap-type:x mandatory!important;scroll-behavior:auto!important;overscroll-behavior-x:contain;-webkit-mask-image:none!important;mask-image:none!important;-webkit-overflow-scrolling:touch}.vcard{flex:0 0 72%!important;scroll-snap-align:center!important}.swipe-hint{display:flex!important}.swipe-hint svg{animation:nudge 1.4s ease-in-out infinite}}
+@media (max-width: 760px){.vids{overflow-x:auto!important;scroll-snap-type:x mandatory!important;scroll-behavior:auto!important;overscroll-behavior-x:contain;-webkit-mask-image:none!important;mask-image:none!important;-webkit-overflow-scrolling:touch}.vcard{flex:0 0 72%!important;scroll-snap-align:center!important;scroll-snap-stop:always}.swipe-hint{display:flex!important}.swipe-hint svg{animation:nudge 1.4s ease-in-out infinite}}
 @keyframes baFade{0%,40%{opacity:0}50%,90%{opacity:1}100%{opacity:0}}
 @keyframes baTagA{0%,44%{opacity:1}45%,94%{opacity:0}95%,100%{opacity:1}}
 @keyframes baTagD{0%,44%{opacity:0}45%,94%{opacity:1}95%,100%{opacity:0}}
@@ -1428,7 +1428,7 @@ html.lenis,html.lenis body{height:auto}
 </div>
 </template>
 <script src="js/motor.js?v=09e05a7ec6"></script>
-<script src="js/main.js?v=8b1a2cad07"></script>
+<script src="js/main.js?v=f1598ccf14"></script>
 <script src="js/lenis.min.js?v=6f17c68162"></script>
 <script src="js/rolagem.js?v=9b112a6a5c"></script>
 <script src="js/regras.js?v=46be5958cc"></script>

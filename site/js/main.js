@@ -32,8 +32,12 @@ var gira = function (c, dir) { if (c._anda) return; if (c._base == null || Math.
     if (!c._ord) c._ord = k.map(function (_, i) { return i; });
     var ord = c._ord, gap = parseFloat(getComputedStyle(c).columnGap) || 16, fim = c.scrollWidth - c.clientWidth, sx = c.scrollLeft, mudou = false;
     var larg = function (n) { return k[n].getBoundingClientRect().width + gap; };
-    if (sx > fim - larg(ord[ord.length - 1]) * 1.2) { var p = ord.shift(); ord.push(p); sx -= larg(p); mudou = true; }
-    else if (sx < larg(ord[0]) * 1.2) { var u = ord.pop(); ord.unshift(u); sx += larg(u); mudou = true; }
+    // deixa sempre 2 cards sobrando de cada lado (um deslize rápido nunca chega na ponta)
+    for (var g = 0; g < k.length; g++) {
+      if (sx > fim - larg(ord[ord.length - 1]) * 1.7) { var p = ord.shift(); ord.push(p); sx -= larg(p); mudou = true; }
+      else if (sx < larg(ord[0]) * 1.7) { var u = ord.pop(); ord.unshift(u); sx += larg(u); mudou = true; }
+      else break;
+    }
     if (!mudou) return;
     var snap = c.style.scrollSnapType; c.style.scrollSnapType = 'none';
     ord.forEach(function (n, i) { k[n].style.order = i; });
@@ -44,8 +48,21 @@ var gira = function (c, dir) { if (c._anda) return; if (c._base == null || Math.
     var c = e.target; if (!cel.matches || !c.classList || !c.classList.contains('vids')) return;
     clearTimeout(c._rt); c._rt = setTimeout(function () { recicla(c); }, 160);
   }, true);
-  // ao abrir, já deixa um card antes do primeiro (dá para deslizar para os dois lados)
+  // deslizes rápidos em sequência não deixam a fileira parar: também troca no instante em que o dedo encosta,
+  // antes do movimento. Como cada deslize anda só um card (scroll-snap-stop), sempre sobra card dos dois lados.
+  document.addEventListener('touchstart', function (e) {
+    var c = cel.matches && e.target.closest && e.target.closest('.vids'); if (c) { clearTimeout(c._rt); recicla(c); }
+  }, { passive: true });
+  // ao abrir, já deixa cards antes do primeiro (dá para deslizar para os dois lados)
   window.addEventListener('load', function () { setTimeout(function () { if (cel.matches) document.querySelectorAll('.vids').forEach(recicla); }, 300); });
+  // fotos da fileira: carregam todas quando ela chega perto da tela (com loading=lazy, o card que troca de ponta aparecia vazio até carregar)
+  window.addEventListener('load', function () {
+    var vs = document.querySelectorAll('.vids'); if (!vs.length) return;
+    var carrega = function (v) { v.querySelectorAll('img[loading="lazy"]').forEach(function (i) { i.loading = 'eager'; }); };
+    if (!('IntersectionObserver' in window)) { vs.forEach(carrega); return; }
+    var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { carrega(e.target); io.unobserve(e.target); } }); }, { rootMargin: '1200px 0px' });
+    vs.forEach(function (v) { io.observe(v); });
+  });
 })();
 /* mensagem da cliente de exemplo no "exemplo ao vivo" do agendamento (mesmo formato da mensagem real) */
 var DEMO_MSG = 'Oi, Raissa! 💙✨\nMe chamo Juliana e vim pelo seu site!\n\n🎀 Técnica: Volume Brasileiro\n💰 A partir de R$ 160\n📅 Dia: Sábado\n⏰ Período: Manhã\n\nTem horário pra mim? 🥰';
