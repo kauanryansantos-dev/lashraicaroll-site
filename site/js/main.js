@@ -21,24 +21,31 @@ var vai = function (c, dir, cur) {
   requestAnimationFrame(st);
 };
 var gira = function (c, dir) { if (c._anda) return; if (c._base == null || Math.abs(c.scrollLeft - c._base) > 4) c._base = c.scrollLeft; vai(c, dir, c.scrollLeft); };
-// celular: o dedo arrasta a fileira (sem rolagem nativa, que travava na ponta); soltou, ela assenta no card seguinte
+// celular: rolagem nativa com encaixe (scroll-snap), que no iPhone roda liso fora da thread principal
+// (antes o dedo mudava scrollLeft por código a cada movimento: ficava com cara de fps baixo).
+// Para não acabar na ponta: quando a fileira PARA perto de uma ponta, o card da outra ponta troca de lado
+// (CSS order) e a rolagem é compensada no mesmo quadro; com tudo parado, não se vê nada.
 (function () {
-  var cel = window.matchMedia('(max-width: 760px)'), c = null, x0 = 0, y0 = 0, s0 = 0, mexeu = false, eixo = '';
-  document.addEventListener('touchstart', function (e) {
-    var v = e.target.closest && e.target.closest('.vids'); if (!v || !cel.matches || v._anda) { c = null; return; }
-    c = v; x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; if (c._base == null) c._base = c.scrollLeft; s0 = c.scrollLeft; mexeu = false; eixo = '';
-  }, { passive: true });
-  document.addEventListener('touchmove', function (e) {
-    if (!c) return; var dx = e.touches[0].clientX - x0, dy = e.touches[0].clientY - y0;
-    if (!eixo) { if (Math.abs(dx) < 6 && Math.abs(dy) < 6) return; eixo = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y'; }
-    if (eixo !== 'x') return; mexeu = true;
-    c.style.scrollSnapType = 'none'; c.style.scrollBehavior = 'auto'; c.scrollLeft = s0 - dx;
-  }, { passive: true });
-  document.addEventListener('touchend', function (e) {
-    if (!c || !mexeu) { c = null; return; }
-    var dx = e.changedTouches[0].clientX - x0; vai(c, Math.abs(dx) > 40 ? (dx < 0 ? 1 : -1) : 0, c.scrollLeft); c = null;
-    var trava = function (ev) { ev.stopPropagation(); ev.preventDefault(); }; document.addEventListener('click', trava, true); setTimeout(function () { document.removeEventListener('click', trava, true); }, 350);
-  });
+  var cel = window.matchMedia('(max-width: 760px)');
+  function recicla(c) {
+    var k = Array.prototype.slice.call(c.children); if (k.length < 3) return;
+    if (!c._ord) c._ord = k.map(function (_, i) { return i; });
+    var ord = c._ord, gap = parseFloat(getComputedStyle(c).columnGap) || 16, fim = c.scrollWidth - c.clientWidth, sx = c.scrollLeft, mudou = false;
+    var larg = function (n) { return k[n].getBoundingClientRect().width + gap; };
+    if (sx > fim - larg(ord[ord.length - 1]) * 1.2) { var p = ord.shift(); ord.push(p); sx -= larg(p); mudou = true; }
+    else if (sx < larg(ord[0]) * 1.2) { var u = ord.pop(); ord.unshift(u); sx += larg(u); mudou = true; }
+    if (!mudou) return;
+    var snap = c.style.scrollSnapType; c.style.scrollSnapType = 'none';
+    ord.forEach(function (n, i) { k[n].style.order = i; });
+    c.scrollLeft = sx; c._base = null;
+    requestAnimationFrame(function () { c.style.scrollSnapType = snap; });
+  }
+  document.addEventListener('scroll', function (e) {
+    var c = e.target; if (!cel.matches || !c.classList || !c.classList.contains('vids')) return;
+    clearTimeout(c._rt); c._rt = setTimeout(function () { recicla(c); }, 160);
+  }, true);
+  // ao abrir, já deixa um card antes do primeiro (dá para deslizar para os dois lados)
+  window.addEventListener('load', function () { setTimeout(function () { if (cel.matches) document.querySelectorAll('.vids').forEach(recicla); }, 300); });
 })();
 /* mensagem da cliente de exemplo no "exemplo ao vivo" do agendamento (mesmo formato da mensagem real) */
 var DEMO_MSG = 'Oi, Raissa! 💙✨\nMe chamo Juliana e vim pelo seu site!\n\n🎀 Técnica: Volume Brasileiro\n💰 A partir de R$ 160\n📅 Dia: Sábado\n⏰ Período: Manhã\n\nTem horário pra mim? 🥰';

@@ -250,7 +250,7 @@ header{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;bac
 @media (max-width: 760px){#simulador .tabs button{font-size:13px!important;padding:9px 14px!important;min-height:40px!important;white-space:nowrap}}
 @media (max-width: 760px){.vid-arrows{display:none!important}}
 @keyframes nudge{0%,100%{transform:translateX(0)}50%{transform:translateX(8px)}}
-@media (max-width: 760px){.vids{overflow-x:hidden!important;scroll-snap-type:none!important;touch-action:pan-y}.vcard{flex:0 0 72%!important}.swipe-hint{display:flex!important}.swipe-hint svg{animation:nudge 1.4s ease-in-out infinite}}
+@media (max-width: 760px){.vids{overflow-x:auto!important;scroll-snap-type:x mandatory!important;scroll-behavior:auto!important;overscroll-behavior-x:contain;-webkit-mask-image:none!important;mask-image:none!important;-webkit-overflow-scrolling:touch}.vcard{flex:0 0 72%!important;scroll-snap-align:center!important}.swipe-hint{display:flex!important}.swipe-hint svg{animation:nudge 1.4s ease-in-out infinite}}
 @keyframes baFade{0%,40%{opacity:0}50%,90%{opacity:1}100%{opacity:0}}
 @keyframes baTagA{0%,44%{opacity:1}45%,94%{opacity:0}95%,100%{opacity:1}}
 @keyframes baTagD{0%,44%{opacity:0}45%,94%{opacity:1}95%,100%{opacity:0}}
@@ -291,6 +291,15 @@ header{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;bac
    No celular: cabeçalho opaco, a foto só dá o zoom (transform), sem faixa, neon parado e sem "respirar". */
 @keyframes eyePullLeve{0%{transform:scale(3.4)}30%{transform:scale(1.9)}70%{transform:scale(1.25)}100%{transform:scale(1.02)}}
 @media (max-width: 760px){
+/* história do olho no celular (28/10): sem ficar presa na tela (230vh com sticky parecia "a rolagem travou").
+   Agora é uma seção normal; o zoom e as frases acontecem enquanto ela passa pela tela. */
+section.story{height:auto!important}
+.story>div:first-child{position:relative!important;height:86svh!important}
+.eyephoto{animation-range:cover 0% cover 55%!important}
+.vig{animation-range:cover 0% cover 55%!important}
+.cap1{animation-range:cover 8% cover 42%!important}
+.cap3{animation-range:cover 40% cover 58%!important}
+.story .skip{display:none!important}
 header{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:#0A0F1C!important}
 .eyephoto{animation-name:eyePullLeve!important;filter:none!important;will-change:transform}
 .sweep{display:none!important}
@@ -1430,7 +1439,7 @@ html.lenis,html.lenis body{height:auto}
 </div>
 </template>
 <script src="js/motor.js?v=20261027a"></script>
-<script src="js/main.js?v=20261028u"></script>
+<script src="js/main.js?v=20261028v"></script>
 <script src="js/lenis.min.js?v=20261022c"></script>
 <script src="js/rolagem.js?v=20261028a"></script>
 <script src="js/regras.js?v=20261027b"></script>
